@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -12,7 +14,12 @@ import java.util.Random;
 @Setter
 @NoArgsConstructor
 @Component
+@Scope("prototype")
 public class Player {
+    @Value("${musicPlayer.name}")
+    private String name;
+    @Value("${musicPlayer.volume}")
+    private int volume;
     private Music rockMusic;
     private Music classicMusic;
 
@@ -23,12 +30,11 @@ public class Player {
     }
 
     public void play(Type type) {
-        
         String[] music = new String[3];
         if (type.equals(Type.CLASSICAL)) {
             music = classicMusic.playMusic();
         } else if (type.equals(Type.ROCK)) {
-            music = rockMusic.playMusic();   
+            music = rockMusic.playMusic();
         }
 
         Random random = new Random();

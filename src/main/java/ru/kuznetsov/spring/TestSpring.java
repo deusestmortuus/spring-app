@@ -8,6 +8,8 @@ public class TestSpring {
                 new ClassPathXmlApplicationContext("applicationContext.xml");
 
         Player player = context.getBean("player", Player.class);
+        System.out.println(player.getName());
+        System.out.println(player.getVolume());
         player.play(Type.CLASSICAL);
     }
 }
