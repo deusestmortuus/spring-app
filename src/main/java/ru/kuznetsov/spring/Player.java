@@ -8,37 +8,26 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Random;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Component
-@Scope("prototype")
 public class Player {
     @Value("${musicPlayer.name}")
     private String name;
     @Value("${musicPlayer.volume}")
     private int volume;
-    private Music rockMusic;
-    private Music classicMusic;
+    private List<Music> musicList;
 
-    @Autowired
-    public Player(Music rockMusic, Music classicMusic) {
-        this.rockMusic = rockMusic;
-        this.classicMusic = classicMusic;
+    public Player(List<Music> musicList) {
+        this.musicList = musicList;
     }
 
-    public void play(Type type) {
-        String[] music = new String[3];
-        if (type.equals(Type.CLASSICAL)) {
-            music = classicMusic.playMusic();
-        } else if (type.equals(Type.ROCK)) {
-            music = rockMusic.playMusic();
-        }
-
+    public void play() {
         Random random = new Random();
-        int songNumber = random.nextInt(3);
-        System.out.println(music[songNumber]);
+        int randomMusic = random.nextInt(3);
+        System.out.println(musicList.get(randomMusic).playMusic());
     }
 }
